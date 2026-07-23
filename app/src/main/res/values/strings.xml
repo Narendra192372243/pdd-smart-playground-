@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Smart Playground Booking &amp; Equipment Rental App</string>
+    <string name="welcome_back">Welcome Back!</string>
+    <string name="login_to_book">Login to book your playground</string>
+    <string name="email_address">Email Address</string>
+    <string name="password">Password</string>
+    <string name="forgot_password">Forgot Password?</string>
+    <string name="login">Login</string>
+    <string name="sign_in_google">Sign in with Google</string>
+    <string name="login_otp">Login with OTP</string>
+    <string name="dont_have_account">Don\'t have an account? </string>
+    <string name="sign_up">Sign Up</string>
+</resources>

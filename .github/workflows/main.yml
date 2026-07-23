@@ -1,0 +1,54 @@
+name: SmartPlayground CI/CD & Baseline Testing Pipeline
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+jobs:
+  selenium-and-load-testing:
+    runs-on: windows-latest
+
+    steps:
+      - name: 📥 Checkout Code
+        uses: actions/checkout@v4
+
+      - name: 🚀 Start Web Server
+        shell: powershell
+        run: |
+          Start-Process powershell -ArgumentList "-ExecutionPolicy Bypass -File .\start_web_server.ps1"
+          Start-Sleep -Seconds 5
+          Invoke-WebRequest -Uri "http://127.0.0.1:8080/index.html" -UseBasicParsing
+
+      - name: 📋 Generate & Verify 300 Selenium Test Cases
+        shell: powershell
+        run: |
+          powershell -ExecutionPolicy Bypass -File .\generate_test_cases.ps1
+
+      - name: ⚡ Execute Baseline Load Test (100 Users / 1 Minute)
+        shell: powershell
+        run: |
+          powershell -ExecutionPolicy Bypass -File .\load_test.ps1 -ConcurrentUsers 100 -DurationSeconds 60
+
+      - name: 📄 Publish Load Test Summary to Workflow Summary
+        shell: powershell
+        run: |
+          Get-Content .\load_test_report.md | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Encoding utf8 -Append
+
+      - name: 📦 Upload 300 Selenium Test Cases Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: Selenium-300-Test-Cases
+          path: |
+            Selenium_300_TestCases_SmartPlayground.xlsx
+            Selenium_300_TestCases_SmartPlayground.csv
+
+      - name: 📦 Upload Baseline Load Test Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: Baseline-Load-Test-Results
+          path: |
+            load_test_results.csv
+            load_test_report.md

@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <fragment
+        android:id="@+id/map"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <!-- Filters Horizontal Scroll -->
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="48.dp"
+        android:padding="8.dp"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/filterAll"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="All"
+                android:layout_marginEnd="8.dp"/>
+            <Button
+                android:id="@+id/filterCricket"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Cricket"
+                android:layout_marginEnd="8.dp"/>
+            <Button
+                android:id="@+id/filterFootball"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Football"
+                android:layout_marginEnd="8.dp"/>
+            <Button
+                android:id="@+id/filterBadminton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Badminton"
+                android:layout_marginEnd="8.dp"/>
+        </LinearLayout>
+    </HorizontalScrollView>
+
+    <LinearLayout
+        android:id="@+id/detailsCard"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="16.dp"
+        android:background="@drawable/rounded_card_bg"
+        android:elevation="8dp"
+        android:orientation="vertical"
+        android:padding="20dp"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/groundName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ground Name"
+            android:textSize="22sp"
+            android:textColor="#1A1A1A"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/groundDistance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0.5 KM"
+            android:textSize="16sp"
+            android:textColor="#2874F0" />
+
+        <TextView
+            android:id="@+id/travelTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Est. 10 mins travel"
+            android:textSize="14sp"
+            android:textColor="#43A047" />
+
+        <TextView
+            android:id="@+id/groundSports"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4.dp"
+            android:text="Cricket, Football"
+            android:textColor="#666666" />
+
+        <TextView
+            android:id="@+id/groundPricing"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4.dp"
+            android:text="Rating: 4.5 | ₹500/hr"
+            android:textColor="#1A1A1A"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16.dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btnNavigate"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginEnd="8.dp"
+                android:text="NAVIGATE"
+                app:icon="@android:drawable/ic_menu_directions" />
+
+            <Button
+                android:id="@+id/btnBookNow"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="BOOK NOW" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <ProgressBar
+        android:id="@+id/loader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="gone" />
+
+</RelativeLayout>

@@ -1,0 +1,10 @@
+﻿Metric,Value
+Concurrent Users,100
+Test Duration (s),61
+Total Requests,81664
+Requests Per Second (RPS),1338.75
+Success Rate (%),100
+Min Response Time (ms),0.9
+Average Response Time (ms),55.05
+95th Percentile (ms),112.53
+Max Response Time (ms),914.24

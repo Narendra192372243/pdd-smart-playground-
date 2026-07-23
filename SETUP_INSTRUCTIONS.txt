@@ -1,0 +1,44 @@
+SMART PLAYGROUND BOOKING & EQUIPMENT RENTAL APP
+-----------------------------------------------
+
+STEP 1: DATABASE SETUP
+1. Open XAMPP Control Panel.
+2. Start Apache and MySQL services.
+3. Open your browser and go to: http://localhost/phpmyadmin
+4. Create a new database named: smart_playground_v2
+5. Import the file: backend/full_project_database.sql
+   (Or copy-paste the SQL queries from that file and run them).
+
+STEP 2: BACKEND API SETUP
+1. Copy all files from the 'backend/v2/' folder to your XAMPP installation path:
+   C:\xampp\htdocs\smart_playground\v2\
+2. Make sure you have 'db_config.php' in C:\xampp\htdocs\smart_playground\
+3. Open CMD and type 'ipconfig' to get your laptop's IPv4 address (e.g., 192.168.1.10).
+4. In Android Studio, open 'NearbyMapActivity.java' and replace 'your_ip_address' with your actual IPv4 address.
+
+STEP 3: GOOGLE MAPS API KEY
+1. Go to Google Cloud Console (https://console.cloud.google.com/).
+2. Create a new project or select an existing one.
+3. Enable 'Maps SDK for Android'.
+4. Create API Key under Credentials.
+5. In Android Studio, open 'AndroidManifest.xml' and replace 'YOUR_GOOGLE_MAPS_API_KEY' with your actual key.
+
+STEP 4: FIREBASE NOTIFICATIONS
+1. Go to Firebase Console (https://console.firebase.google.com/).
+2. Add a new project and register your app with package name:
+   com.example.smartplaygroundbookingequipmentrentalapp
+3. Download 'google-services.json' and place it in the 'app/' folder of the project.
+
+STEP 5: RUN THE APP
+1. Connect your physical phone via USB (with Developer Options and USB Debugging enabled).
+2. Click the green 'Run' button in Android Studio.
+3. The app will start with the Splash Screen, perform checks, and take you to the Home Screen.
+
+FEATURES INCLUDED:
+- Real-time Slot Locking (MySQL Transaction based)
+- Nearby Playgrounds Within 5KM (Haversine Formula)
+- Dynamic Pricing (Peak hour detection in SQL)
+- Team Finder & Sports Community
+- QR Code Entry System
+- Firebase OTP Login integration (ready for config)
+- Offline support (Internet check at startup)
