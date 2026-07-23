@@ -18,8 +18,8 @@ jobs:
       - name: 🚀 Start Web Server
         shell: powershell
         run: |
-          Start-Job -Name WebServer -ScriptBlock { powershell -ExecutionPolicy Bypass -File .\start_web_server.ps1 }
-          Start-Sleep -Seconds 4
+          Start-Process python -ArgumentList "-m http.server 8080 --directory backend"
+          Start-Sleep -Seconds 3
           $res = Invoke-WebRequest -Uri "http://127.0.0.1:8080/index.html" -UseBasicParsing
           Write-Host "Server status code:" $res.StatusCode
 

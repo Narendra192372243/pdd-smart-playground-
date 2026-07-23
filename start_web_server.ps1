@@ -51,7 +51,8 @@ try {
         $response.Close()
     }
 } catch {
-    Write-Host "Error starting server: $_" -ForegroundColor Red
+    Write-Host "HttpListener restricted. Falling back to Python Web Server..." -ForegroundColor Yellow
+    python -m http.server $port --directory $webRoot
 } finally {
-    $listener.Stop()
+    try { $listener.Stop() } catch {}
 }
