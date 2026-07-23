@@ -118,7 +118,7 @@ Max Response Time (ms),{8}
 '@
 
 $csvText = $csvTemplate -f $ConcurrentUsers, $actualDuration, $totalReqs, $rps, $successRate, $minMs, $avgMs, $p95Ms, $maxMs
-$csvPath = 'c:\Users\narendra\AndroidStudioProjects\SmartPlaygroundBookingEquipmentRentalApp\load_test_results.csv'
+$csvPath = Join-Path $PSScriptRoot "load_test_results.csv"
 $csvText | Set-Content -Path $csvPath -Encoding UTF8
 
 # Save Markdown Report
@@ -144,7 +144,7 @@ $mdTemplate = @'
 '@
 
 $mdText = $mdTemplate -f $ConcurrentUsers, $actualDuration, $totalReqs, $rps, $successRate, $minMs, $avgMs, $p95Ms, $maxMs
-$mdPath = 'c:\Users\narendra\AndroidStudioProjects\SmartPlaygroundBookingEquipmentRentalApp\load_test_report.md'
+$mdPath = Join-Path $PSScriptRoot "load_test_report.md"
 $mdText | Set-Content -Path $mdPath -Encoding UTF8
 
 Write-Host 'Saved reports to load_test_results.csv and load_test_report.md' -ForegroundColor Cyan

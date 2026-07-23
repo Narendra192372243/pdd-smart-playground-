@@ -18,9 +18,10 @@ jobs:
       - name: 🚀 Start Web Server
         shell: powershell
         run: |
-          Start-Process powershell -ArgumentList "-ExecutionPolicy Bypass -File .\start_web_server.ps1"
-          Start-Sleep -Seconds 5
-          Invoke-WebRequest -Uri "http://127.0.0.1:8080/index.html" -UseBasicParsing
+          Start-Job -Name WebServer -ScriptBlock { powershell -ExecutionPolicy Bypass -File .\start_web_server.ps1 }
+          Start-Sleep -Seconds 4
+          $res = Invoke-WebRequest -Uri "http://127.0.0.1:8080/index.html" -UseBasicParsing
+          Write-Host "Server status code:" $res.StatusCode
 
       - name: 📋 Generate & Verify 300 Selenium Test Cases
         shell: powershell

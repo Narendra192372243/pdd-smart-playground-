@@ -1,6 +1,6 @@
 # PowerShell HTTP Server for Smart Playground Web Application
 $port = 8080
-$webRoot = "c:\Users\narendra\AndroidStudioProjects\SmartPlaygroundBookingEquipmentRentalApp\backend"
+$webRoot = Join-Path $PSScriptRoot "backend"
 $listener = New-Object System.Net.HttpListener
 $listener.Prefixes.Add("http://localhost:$port/")
 $listener.Prefixes.Add("http://127.0.0.1:$port/")

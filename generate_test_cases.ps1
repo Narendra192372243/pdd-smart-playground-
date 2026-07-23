@@ -1,6 +1,5 @@
-# PowerShell Script to Generate 300 Selenium Test Cases for SmartPlayground Web Application
-$outputPathCsv = "c:\Users\narendra\AndroidStudioProjects\SmartPlaygroundBookingEquipmentRentalApp\Selenium_300_TestCases_SmartPlayground.csv"
-$outputPathXlsx = "c:\Users\narendra\AndroidStudioProjects\SmartPlaygroundBookingEquipmentRentalApp\Selenium_300_TestCases_SmartPlayground.xlsx"
+$outputPathCsv = Join-Path $PSScriptRoot "Selenium_300_TestCases_SmartPlayground.csv"
+$outputPathXlsx = Join-Path $PSScriptRoot "Selenium_300_TestCases_SmartPlayground.xlsx"
 
 $testCases = [System.Collections.Generic.List[PSObject]]::new()
 
