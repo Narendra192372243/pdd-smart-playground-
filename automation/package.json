@@ -1,0 +1,16 @@
+{
+  "name": "smart-playground-appium-automation",
+  "version": "1.0.0",
+  "description": "Enterprise Appium Android E2E Automation Framework with Excel & HTML Reports",
+  "main": "automation/runners/run_appium_tests.js",
+  "scripts": {
+    "test": "node automation/runners/run_appium_tests.js",
+    "generate-reports": "node automation/reports/generate_all_reports.js"
+  },
+  "dependencies": {
+    "webdriverio": "^8.24.0",
+    "appium": "^2.5.0",
+    "xlsx": "^0.18.5",
+    "fs-extra": "^11.2.0"
+  }
+}

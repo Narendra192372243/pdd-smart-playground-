@@ -1,0 +1,49 @@
+name: DevSecOps Application Security & Audit Pipeline
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+jobs:
+  security-audit:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📥 Stage 1: Repository Checkout
+        uses: actions/checkout@v4
+
+      - name: 🛡️ Stage 2: Static Application Security Testing (SAST)
+        uses: returntocorp/semgrep-action@v1
+        with:
+          config: p/ci
+        continue-on-error: true
+
+      - name: 📦 Stage 3: Vulnerability Dependency Review
+        uses: actions/dependency-review-action@v4
+        continue-on-error: true
+
+      - name: 🔐 Stage 4: Secret Leak Detection (Gitleaks)
+        uses: gitleaks/gitleaks-action@v2
+        continue-on-error: true
+
+      - name: 📄 Stage 5: Publish Audit Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: DevSecOps-Security-Audit-Results
+          retention-days: 30
+          path: |
+            Vulnerability Test Results/backend-inventory.md
+            Vulnerability Test Results/security-review.md
+            Vulnerability Test Results/executive-summary.md
+            Vulnerability Test Results/dependency-report.md
+            Vulnerability Test Results/performance-report.md
+            Vulnerability Test Results/remediation-guide.md
+            Vulnerability Test Results/endpoint-inventory.xlsx
+            Vulnerability Test Results/findings.xlsx
+            Vulnerability Test Results/test-cases.xlsx
+            Vulnerability Test Results/k6-load-test.js
+            Vulnerability Test Results/artillery-load-test.yml
+            Vulnerability Test Results/jmeter-test-plan.jmx

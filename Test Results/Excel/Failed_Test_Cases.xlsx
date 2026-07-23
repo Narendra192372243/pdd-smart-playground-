@@ -1,0 +1,42 @@
+﻿<?xml version="1.0"?>
+<?mso-application progid="Excel.Sheet"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+ xmlns:o="urn:schemas-microsoft-com:office:office"
+ xmlns:x="urn:schemas-microsoft-com:office:excel"
+ xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet">
+ <Styles>
+  <Style ss:ID="Header">
+   <Font ss:Bold="1" ss:Color="#FFFFFF"/>
+   <Interior ss:Color="#2563EB" ss:Pattern="Solid"/>
+   <Alignment ss:Horizontal="Center"/>
+  </Style>
+ </Styles>
+ <Worksheet ss:Name="Failed Test Cases">
+  <Table>
+   <Row ss:StyleID="Header">
+    <Cell><Data ss:Type="String">Test ID</Data></Cell>
+    <Cell><Data ss:Type="String">Module</Data></Cell>
+    <Cell><Data ss:Type="String">Test Name</Data></Cell>
+    <Cell><Data ss:Type="String">Priority</Data></Cell>
+    <Cell><Data ss:Type="String">Status</Data></Cell>
+    <Cell><Data ss:Type="String">Execution Time (s)</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">TC_VAL_013</Data></Cell>
+    <Cell><Data ss:Type="String">Input Validation</Data></Cell>
+    <Cell><Data ss:Type="String">Verify Input Validation End-to-End Execution Scenario #13</Data></Cell>
+    <Cell><Data ss:Type="String">Medium</Data></Cell>
+    <Cell><Data ss:Type="String">Failed</Data></Cell>
+    <Cell><Data ss:Type="String">0.4</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">TC_ERR_007</Data></Cell>
+    <Cell><Data ss:Type="String">Error Handling</Data></Cell>
+    <Cell><Data ss:Type="String">Verify Error Handling End-to-End Execution Scenario #7</Data></Cell>
+    <Cell><Data ss:Type="String">Medium</Data></Cell>
+    <Cell><Data ss:Type="String">Failed</Data></Cell>
+    <Cell><Data ss:Type="String">0.16</Data></Cell>
+   </Row>
+  </Table>
+ </Worksheet>
+</Workbook>
