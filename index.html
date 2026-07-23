@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartPlayground | Arena Booking & Equipment Rental</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <!-- QRCode.js Library CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+</head>
+<body>
+    <!-- Top Navigation Bar -->
+    <header class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <span class="logo-icon">⚽</span>
+                <div class="logo-text">
+                    <span class="brand">SmartPlayground</span>
+                    <span class="tagline">Booking & Equipment Rental</span>
+                </div>
+            </div>
+
+            <nav class="nav-links">
+                <button class="nav-btn active" data-tab="tab-playgrounds">
+                    <span class="icon">🏟️</span> Playgrounds
+                </button>
+                <button class="nav-btn" data-tab="tab-equipment">
+                    <span class="icon">🎾</span> Equipment Rental
+                </button>
+                <button class="nav-btn" data-tab="tab-teams">
+                    <span class="icon">🤝</span> Team Finder
+                </button>
+                <button class="nav-btn" data-tab="tab-bookings">
+                    <span class="icon">🎟️</span> My Bookings & QR
+                </button>
+                <button class="nav-btn admin-badge-btn" data-tab="tab-admin">
+                    <span class="icon">⚡</span> Admin Dashboard
+                </button>
+            </nav>
+
+            <div class="nav-user" id="nav-user-container">
+                <!-- Logged Out State -->
+                <div class="auth-buttons" id="auth-buttons">
+                    <button class="btn-secondary nav-auth-btn" id="btn-open-login">Sign In</button>
+                    <button class="btn-primary nav-auth-btn" id="btn-open-signup">Sign Up</button>
+                </div>
+
+                <!-- Logged In State (Hidden by default) -->
+                <div class="logged-in-profile hidden" id="logged-in-profile">
+                    <button class="user-badge" id="user-points-badge">🏆 100 Pts</button>
+                    <div class="user-profile" id="user-profile-btn">
+                        <span class="avatar">👤</span>
+                        <span class="username" id="display-username">User</span>
+                    </div>
+                    <button class="btn-icon" id="btn-notifications" title="Notifications">🔔</button>
+                    <button class="btn-icon" id="btn-help" title="Help & Support">❓</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="main-content">
+        <!-- Hero Banner -->
+        <section class="hero-section">
+            <div class="hero-badge">⚡ Real-Time Slot Locking & Peak-Price Engine</div>
+            <h1 class="hero-title">Book Premier Sports Venues & Pro Gear In Seconds</h1>
+            <p class="hero-subtitle">Discover nearby turf fields, badminton courts & tennis grounds with instant locking, dynamic rates, and hassle-free equipment rentals.</p>
+
+            <div class="search-bar-wrapper">
+                <div class="search-input-box">
+                    <span class="search-icon">🔍</span>
+                    <input type="text" id="search-input" placeholder="Search playgrounds by name, sport, or location (e.g. Marina Turf, Anna Nagar)...">
+                </div>
+                <button class="btn-primary" id="btn-search">Find Venues</button>
+            </div>
+        </section>
+
+        <!-- Dynamic Category Pills -->
+        <section class="filter-section">
+            <div class="filter-pills" id="filter-pills">
+                <button class="pill active" data-sport="All">🌟 All Sports</button>
+                <button class="pill" data-sport="Football">⚽ Football</button>
+                <button class="pill" data-sport="Cricket">🏏 Cricket</button>
+                <button class="pill" data-sport="Badminton">🏸 Badminton</button>
+                <button class="pill" data-sport="Basketball">🏀 Basketball</button>
+                <button class="pill" data-sport="Tennis">🎾 Tennis</button>
+                <button class="pill fav-pill" data-sport="Favorites">❤️ Favorites (<span id="fav-count">0</span>)</button>
+            </div>
+
+            <div class="near-me-toggle">
+                <label class="toggle-switch">
+                    <input type="checkbox" id="nearby-checkbox">
+                    <span class="slider round"></span>
+                </label>
+                <span class="nearby-label">📍 Nearby (Within 5KM - Haversine)</span>
+            </div>
+        </section>
+
+        <!-- TAB 1: Playgrounds Browser -->
+        <div class="tab-pane active" id="tab-playgrounds">
+            <div class="section-header">
+                <h2>Available Sports Arenas</h2>
+                <span class="count-badge" id="grounds-count">6 Venues Found</span>
+            </div>
+
+            <div class="playground-grid" id="playground-grid">
+                <!-- Dynamic Ground Cards Injected Here -->
+            </div>
+        </div>
+
+        <!-- TAB 2: Equipment Rental -->
+        <div class="tab-pane" id="tab-equipment">
+            <div class="section-header">
+                <h2>Sports Equipment Rental Desk</h2>
+                <p>Rent high-grade sports gear per day with quick campus & venue pickup.</p>
+            </div>
+
+            <div class="equipment-layout">
+                <div class="equipment-grid" id="equipment-grid">
+                    <!-- Dynamic Equipment Items Injected Here -->
+                </div>
+
+                <div class="rental-cart-card">
+                    <h3>🛒 Rental Summary</h3>
+                    <div id="cart-items-list" class="cart-items">
+                        <p class="empty-cart-msg">No equipment selected yet. Choose items to rent.</p>
+                    </div>
+
+                    <div class="cart-total-box">
+                        <div class="cart-row">
+                            <span>Duration</span>
+                            <span>1 Day</span>
+                        </div>
+                        <div class="cart-row total-row">
+                            <span>Total Amount</span>
+                            <span class="total-price" id="cart-total-price">₹0</span>
+                        </div>
+                        <button class="btn-success full-width" id="btn-checkout-equipment">Confirm Equipment Rental</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 3: Team Finder & Community -->
+        <div class="tab-pane" id="tab-teams">
+            <div class="section-header">
+                <h2>Team Finder & Matchmaker</h2>
+                <button class="btn-primary" id="btn-create-team">+ Create Match Request</button>
+            </div>
+
+            <div class="teams-grid" id="teams-grid">
+                <!-- Dynamic Teams Cards Injected Here -->
+            </div>
+        </div>
+
+        <!-- TAB 4: My Bookings & QR Ticket Pass -->
+        <div class="tab-pane" id="tab-bookings">
+            <div class="section-header">
+                <h2>My Bookings & Digital QR Pass</h2>
+                <p>Present your active QR Code at the venue entry scanner.</p>
+            </div>
+
+            <div class="bookings-layout">
+                <div class="bookings-list" id="bookings-list">
+                    <!-- Dynamic Bookings Cards -->
+                </div>
+
+                <div class="qr-preview-card" id="qr-preview-card">
+                    <div class="ticket-header">
+                        <span class="ticket-status active-status">ACTIVE ENTRY PASS</span>
+                        <h4 id="qr-ground-name">Select a Booking</h4>
+                    </div>
+
+                    <div class="qr-canvas-box" id="qrcode">
+                        <div class="qr-placeholder">Click 'View QR Pass' on any booking card</div>
+                    </div>
+
+                    <div class="ticket-details">
+                        <div class="t-row"><span>Booking ID:</span> <strong id="qr-booking-id">#SP-0000</strong></div>
+                        <div class="t-row"><span>Time Slot:</span> <strong id="qr-booking-time">--:--</strong></div>
+                        <div class="t-row"><span>Payment:</span> <span class="badge-paid">PAID</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 5: Admin Dashboard -->
+        <div class="tab-pane" id="tab-admin">
+            <div class="admin-header">
+                <h2>⚡ Super Admin Control Center</h2>
+                <span class="admin-status">LIVE SYSTEM METRICS</span>
+            </div>
+
+            <div class="metrics-row">
+                <div class="metric-card">
+                    <div class="metric-icon">🏟️</div>
+                    <div class="metric-info">
+                        <span class="metric-val" id="metric-total-grounds">6</span>
+                        <span class="metric-lbl">Total Arenas</span>
+                    </div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-icon">🎟️</div>
+                    <div class="metric-info">
+                        <span class="metric-val" id="metric-total-bookings">14</span>
+                        <span class="metric-lbl">Active Bookings</span>
+                    </div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-icon">🔒</div>
+                    <div class="metric-info">
+                        <span class="metric-val" id="metric-locked-slots">3</span>
+                        <span class="metric-lbl">Locked Slots</span>
+                    </div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-icon">💰</div>
+                    <div class="metric-info">
+                        <span class="metric-val" id="metric-revenue">₹18,450</span>
+                        <span class="metric-lbl">Total Revenue</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="admin-sections">
+                <div class="admin-panel">
+                    <h3>Grounds Status & Slot Lock Management</h3>
+                    <div class="table-responsive">
+                        <table class="admin-table" id="table-admin-slots">
+                            <thead>
+                                <tr>
+                                    <th>Ground Name</th>
+                                    <th>Slot Time</th>
+                                    <th>Lock Status</th>
+                                    <th>Hold Time Remaining</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Injected rows -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Quick Create Account / Saved Account Section -->
+        <section class="bottom-account-section" id="bottom-account-section">
+            <div class="bottom-account-card">
+                <!-- Logged Out State: Create Account Form -->
+                <div class="account-logged-out-box" id="bottom-logged-out-box">
+                    <div class="bottom-account-info">
+                        <span class="badge-tag">🚀 Join SmartPlayground Community</span>
+                        <h2>Create Your Account & Save Profile</h2>
+                        <p>Sign up now to lock slots, manage bookings, rent sports gear, and get 100 Reward Points!</p>
+                    </div>
+                    <form id="bottom-signup-form" class="bottom-signup-form">
+                        <div class="form-row-2">
+                            <input type="text" id="bottom-signup-name" placeholder="Full Name *" required>
+                            <input type="email" id="bottom-signup-email" placeholder="Email Address">
+                        </div>
+                        <div class="form-row-2">
+                            <input type="tel" id="bottom-signup-phone" placeholder="Phone Number *" required>
+                            <input type="password" id="bottom-signup-password" placeholder="Create Password *" required>
+                        </div>
+                        <div class="bottom-form-actions">
+                            <button type="submit" class="btn-success">Create Account & Save Account</button>
+                            <span class="or-text">or</span>
+                            <button type="button" class="btn-secondary" id="btn-bottom-open-login">Sign In Existing Account</button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Logged In State: Saved Account Card -->
+                <div class="account-logged-in-box hidden" id="bottom-logged-in-box">
+                    <div class="saved-account-header">
+                        <div class="avatar-large">👤</div>
+                        <div class="account-details">
+                            <span class="active-badge">✓ ACCOUNT SAVED & LOGGED IN</span>
+                            <h3 id="bottom-account-name">User Name</h3>
+                            <p id="bottom-account-email-phone">user@example.com | +91 9876543210</p>
+                        </div>
+                        <div class="points-badge-box">
+                            <span class="pts-title">Reward Balance</span>
+                            <strong class="pts-number" id="bottom-account-points">🏆 100 Pts</strong>
+                        </div>
+                    </div>
+                    <div class="saved-account-footer">
+                        <span>Account saved in MySQL database & active session</span>
+                        <button class="btn-primary" id="btn-bottom-view-profile">View Full Profile</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- AUTH MODAL: SIGN UP -->
+    <div class="modal-overlay" id="signup-modal">
+        <div class="modal-content auth-modal">
+            <button class="modal-close" id="signup-close-btn">&times;</button>
+            <div class="auth-header">
+                <span class="auth-icon">🚀</span>
+                <h3>Sign Up</h3>
+                <p>Sign up to lock slots, earn reward points & rent gear.</p>
+            </div>
+            <form id="signup-form" class="auth-form">
+                <div class="form-group">
+                    <label>Full Name *</label>
+                    <input type="text" id="signup-name" placeholder="e.g. Narendra Kumar" required>
+                </div>
+                <div class="form-group">
+                    <label>Email Address</label>
+                    <input type="email" id="signup-email" placeholder="e.g. narendra@example.com">
+                </div>
+                <div class="form-group">
+                    <label>Phone Number *</label>
+                    <input type="tel" id="signup-phone" placeholder="e.g. 9876543210" required>
+                </div>
+                <div class="form-group">
+                    <label>City / Live Location *</label>
+                    <input type="text" id="signup-location" placeholder="e.g. Adyar, Chennai" value="Adyar, Chennai" required>
+                </div>
+                <div class="form-group">
+                    <label>Password *</label>
+                    <input type="password" id="signup-password" placeholder="••••••••" required>
+                </div>
+                <button type="submit" class="btn-primary full-width">Sign Up & Get 100 Reward Pts</button>
+                <div class="auth-switch">
+                    Already have an account? <a href="#" id="link-to-login">Sign In</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- AUTH MODAL: SIGN IN -->
+    <div class="modal-overlay" id="login-modal">
+        <div class="modal-content auth-modal">
+            <button class="modal-close" id="login-close-btn">&times;</button>
+            <div class="auth-header">
+                <span class="auth-icon">🔑</span>
+                <h3>Welcome Back</h3>
+                <p>Sign in with your registered Phone or Email.</p>
+            </div>
+            <form id="login-form" class="auth-form">
+                <div class="form-group">
+                    <label>Phone Number or Email *</label>
+                    <input type="text" id="login-phone" placeholder="e.g. 9876543210 or email" required>
+                </div>
+                <div class="form-group">
+                    <label>Password *</label>
+                    <input type="password" id="login-password" placeholder="••••••••" required>
+                </div>
+                <button type="submit" class="btn-primary full-width">Sign In</button>
+                <div class="auth-switch">
+                    Don't have an account? <a href="#" id="link-to-signup">Sign Up</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- USER PROFILE MODAL -->
+    <div class="modal-overlay" id="profile-modal">
+        <div class="modal-content profile-modal">
+            <button class="modal-close" id="profile-close-btn">&times;</button>
+            <div class="profile-card-header">
+                <div class="big-avatar">👤</div>
+                <div class="profile-meta">
+                    <h3 id="prof-name">User Name</h3>
+                    <span id="prof-email" class="sub-text">user@example.com</span>
+                    <span id="prof-phone" class="sub-text">📞 +91 9876543210</span>
+                    <span id="prof-location" class="sub-text">📍 Adyar, Chennai</span>
+                </div>
+            </div>
+
+            <div class="profile-stats-row">
+                <div class="p-stat">
+                    <span class="stat-val" id="prof-points">100</span>
+                    <span class="stat-lbl">Reward Pts</span>
+                </div>
+                <div class="p-stat">
+                    <span class="stat-val" id="prof-tier">Gold</span>
+                    <span class="stat-lbl">Member Status</span>
+                </div>
+                <div class="p-stat">
+                    <span class="stat-val" id="prof-total-bookings">2</span>
+                    <span class="stat-lbl">Bookings</span>
+                </div>
+            </div>
+
+            <div class="profile-actions">
+                <button class="btn-danger full-width" id="btn-logout">🚪 Sign Out / Switch Account</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slot Booking Modal -->
+    <div class="modal-overlay" id="booking-modal">
+        <div class="modal-content">
+            <button class="modal-close" id="modal-close-btn">&times;</button>
+            <div class="modal-header">
+                <h3 id="modal-ground-name">Ground Booking</h3>
+                <span class="modal-ground-sport" id="modal-ground-sport">Football</span>
+            </div>
+
+            <div class="modal-body">
+                <div class="date-picker-box">
+                    <label>Select Date:</label>
+                    <input type="date" id="booking-date-input" value="2026-07-22">
+                </div>
+
+                <div class="slots-header">
+                    <h4>Select Available Slot (1-Hour Duration)</h4>
+                    <span class="peak-legend">🔥 Peak Hours (+20% Dynamic Pricing)</span>
+                </div>
+
+                <div class="slots-grid" id="modal-slots-grid">
+                    <!-- Dynamic slots -->
+                </div>
+
+                <div class="slot-lock-timer-box hidden" id="slot-lock-timer-box">
+                    <span class="lock-icon">🔒</span>
+                    <div class="lock-timer-info">
+                        <span>Slot Reserved For You!</span>
+                        <strong id="lock-countdown">10:00</strong>
+                    </div>
+                </div>
+
+                <div class="payment-method-box">
+                    <label>Payment Method:</label>
+                    <select id="payment-method-select">
+                        <option value="UPI / GPay">⚡ UPI (GPay / PhonePe / Paytm)</option>
+                        <option value="Credit/Debit Card">💳 Credit / Debit Card</option>
+                        <option value="Net Banking">🏦 Net Banking</option>
+                        <option value="Pay at Venue">💵 Pay at Venue</option>
+                    </select>
+                </div>
+
+                <div class="booking-summary-box">
+                    <div class="b-row">
+                        <span>Base Rate:</span>
+                        <span id="summary-base-rate">₹500 / hr</span>
+                    </div>
+                    <div class="b-row">
+                        <span>Dynamic Pricing Adj:</span>
+                        <span id="summary-dynamic-adj">₹0</span>
+                    </div>
+                    <div class="b-row total">
+                        <span>Final Payable Amount:</span>
+                        <strong id="summary-total-amount">₹500</strong>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button class="btn-secondary" id="modal-cancel-btn">Cancel</button>
+                <button class="btn-primary" id="btn-confirm-booking">Confirm Booking & Pay</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Create Team Modal -->
+    <div class="modal-overlay" id="team-modal">
+        <div class="modal-content">
+            <button class="modal-close" id="team-modal-close-btn">&times;</button>
+            <h3>Create Match Request</h3>
+            <form id="team-form" class="team-form">
+                <div class="form-group">
+                    <label>Team/Match Name</label>
+                    <input type="text" id="team-name-input" placeholder="e.g. Marina Super Strikers" required>
+                </div>
+                <div class="form-group">
+                    <label>Sport</label>
+                    <select id="team-sport-input">
+                        <option value="Football">Football</option>
+                        <option value="Cricket">Cricket</option>
+                        <option value="Badminton">Badminton</option>
+                        <option value="Basketball">Basketball</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Players Needed</label>
+                    <input type="number" id="team-players-input" value="3" min="1" max="11" required>
+                </div>
+                <div class="form-group">
+                    <label>Location / Playground</label>
+                    <input type="text" id="team-location-input" placeholder="e.g. Marina Sports Arena" required>
+                </div>
+                <button type="submit" class="btn-primary full-width">Post Match Request</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Help & Support Modal -->
+    <div class="modal-overlay" id="help-modal">
+        <div class="modal-content">
+            <button class="modal-close" id="help-close-btn">&times;</button>
+            <h3>❓ Help & Customer Support</h3>
+            <div class="faq-list" style="margin:1rem 0;">
+                <div class="faq-item">
+                    <strong>Q: How does real-time slot locking work?</strong>
+                    <p>A: When you click a slot, it is reserved exclusively for you for 10 minutes to prevent double-booking while you pay.</p>
+                </div>
+                <div class="faq-item" style="margin-top:0.75rem;">
+                    <strong>Q: How do I enter the playground?</strong>
+                    <p>A: Open 'My Bookings & QR' tab and show your active QR Pass to the entry scanner at the venue.</p>
+                </div>
+            </div>
+            <div class="support-contact" style="background:var(--bg-dark); padding:0.85rem; border-radius:8px; font-size:0.88rem;">
+                📞 24/7 Helpline: <strong>+91 98765 43210</strong><br>
+                ✉️ Email: <strong>support@smartplayground.com</strong>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notifications -->
+    <div class="toast-container" id="toast-container"></div>
+
+    <script src="app.js"></script>
+</body>
+</html>
