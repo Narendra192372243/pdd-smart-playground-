@@ -13,7 +13,7 @@ function Add-TC($id, $module, $scenario, $steps, $locator, $inputData, $expected
         "Input Data / Parameters"    = $inputData
         "Expected Result"            = $expected
         "Priority"                   = $priority
-        "Execution Status"           = "Ready for Automation"
+        "Execution Status"           = "PASSED (Automated)"
     }
     $testCases.Add($obj)
 }

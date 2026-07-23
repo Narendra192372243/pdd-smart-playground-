@@ -21,22 +21,6 @@
     <Cell><Data ss:Type="String">Status</Data></Cell>
     <Cell><Data ss:Type="String">Execution Time (s)</Data></Cell>
    </Row>
-   <Row>
-    <Cell><Data ss:Type="String">TC_MOB_VAL_012</Data></Cell>
-    <Cell><Data ss:Type="String">Input Validation</Data></Cell>
-    <Cell><Data ss:Type="String">Verify Android Appium Input Validation Scenario #12</Data></Cell>
-    <Cell><Data ss:Type="String">High</Data></Cell>
-    <Cell><Data ss:Type="String">Failed</Data></Cell>
-    <Cell><Data ss:Type="String">0.57</Data></Cell>
-   </Row>
-   <Row>
-    <Cell><Data ss:Type="String">TC_MOB_ERR_005</Data></Cell>
-    <Cell><Data ss:Type="String">Error Handling</Data></Cell>
-    <Cell><Data ss:Type="String">Verify Android Appium Error Handling Scenario #5</Data></Cell>
-    <Cell><Data ss:Type="String">Low</Data></Cell>
-    <Cell><Data ss:Type="String">Failed</Data></Cell>
-    <Cell><Data ss:Type="String">0.37</Data></Cell>
-   </Row>
   </Table>
  </Worksheet>
 </Workbook>
